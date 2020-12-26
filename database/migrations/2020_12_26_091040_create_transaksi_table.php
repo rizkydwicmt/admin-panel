@@ -17,7 +17,8 @@ class CreateTransaksiTable extends Migration
             $table->id();
             $table->string('hwid');
             $table->string('username');
-            $table->string('keterangan');
+            $table->string('atas_nama');
+            $table->string('via');
             $table->boolean('status');
             $table->timestamps();
         });

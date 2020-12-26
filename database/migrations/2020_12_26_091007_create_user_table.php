@@ -18,6 +18,7 @@ class CreateUserTable extends Migration
             $table->string('hwid')->unique();
             $table->string('owner');
             $table->string('keterangan');
+            $table->string('server');
             $table->boolean('status');
             $table->timestamp('expired_date', 0)->nullable();
             $table->timestamps();

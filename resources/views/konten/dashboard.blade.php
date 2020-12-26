@@ -1,6 +1,6 @@
-@extends('admin/core/main')
-@extends('admin/core/navbar')
-@extends('admin/core/footer')
+@extends('core/main')
+@extends('core/navbar')
+@extends('core/footer')
 
 @section('title', 'Dashboard - Admin Panel Pengajuan Webinar')
 @section('page-title', 'Dashboard')
@@ -160,7 +160,7 @@
 @endsection
 
 @section('js_asset')
-    {{-- <script src="{{ asset('/assets/admin/js/pages/dashboard.js') }}"></script> --}}
+    {{-- <script src="{{ asset('/assets/js/pages/dashboard.js') }}"></script> --}}
     <script>
 
         var chartColors = {

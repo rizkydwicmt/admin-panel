@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
 <!--===============================================================================================-->
-    <link rel="stylesheet" href="{{ asset('/assets/admin/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.css') }}">
 <!--===============================================================================================-->
     <link rel="stylesheet" href="{{ asset('/vendors/chartjs/Chart.min.css') }}">
 <!--===============================================================================================-->
     <link rel="stylesheet" href="{{ asset('/vendors/perfect-scrollbar/perfect-scrollbar.css') }}">
-    <link rel="stylesheet" href="{{ asset('/assets/admin/css/app.css') }}">
-    <link rel="shortcut icon" href="{{ asset('/assets/admin/images/favicon.svg') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ asset('/assets/css/app.css') }}">
+    <link rel="shortcut icon" href="{{ asset('/assets/images/favicon.svg') }}" type="image/x-icon">
 <!--===============================================================================================-->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
@@ -51,15 +51,15 @@
         </div>
     </div>
 <!--===============================================================================================-->
-    <script src="{{ asset('/assets/admin/js/feather-icons/feather.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/feather-icons/feather.min.js') }}"></script>
     <script src="{{ asset('/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
-    <script src="{{ asset('/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
-    <script src="{{ asset('/assets/admin/js/app.js') }}"></script>
+    <script src="{{ asset('/vendors/jquery/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('/assets/js/app.js') }}"></script>
 <!--===============================================================================================-->
     <script src="{{ asset('/vendors/chartjs/Chart.min.js') }}"></script>
     <script src="{{ asset('/vendors/apexcharts/apexcharts.min.js') }}"></script>
 <!--===============================================================================================-->
-    <script src="{{ asset('/assets/admin/js/main.js') }}"></script>
+    <script src="{{ asset('/assets/js/main.js') }}"></script>
 <!--===============================================================================================-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <!--===============================================================================================-->

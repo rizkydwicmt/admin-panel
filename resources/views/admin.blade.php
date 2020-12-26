@@ -70,12 +70,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
     <!--===============================================================================================-->
-	    <script src="{{ asset('/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+	    <script src="{{ asset('/vendors/jquery/jquery-3.2.1.min.js') }}"></script>
     <!--===============================================================================================-->
-        <script src="{{ asset('/vendor/animsition/js/animsition.min.js') }}"></script>
+        <script src="{{ asset('/vendors/animsition/js/animsition.min.js') }}"></script>
     <!--===============================================================================================-->
-        <script src="{{ asset('/vendor/bootstrap/js/popper.js') }}"></script>
-        <script src="{{ asset('/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('/vendors/bootstrap/js/popper.js') }}"></script>
+        <script src="{{ asset('/vendors/bootstrap/js/bootstrap.min.js') }}"></script>
     <!--===============================================================================================-->
         <script src="{{ asset('/vendor/select2/select2.min.js') }}"></script>
     <!--===============================================================================================-->

@@ -17,6 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+/* Admin */
+
+$router->group(['prefix' => 'akses_admin'], function () use ($router) {
+    Route::get('/', 'AdminController@dashboard');
+    Route::get('/list_user', 'AdminController@list_user');
+    Route::get('/kelola_user', 'AdminController@kelola_user');
+});
+
 /* Users */
 
 // Route::get('/', 'UsersController@home');
