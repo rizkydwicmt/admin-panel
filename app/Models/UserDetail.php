@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
-class User extends Model
+class UserDetail extends Model
 {
-    protected $table = 'user';
+    protected $table = 'user_detail';
 
     protected $guarded =  ['id', 'created_at', 'update_at'];
 
