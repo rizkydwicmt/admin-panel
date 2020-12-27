@@ -37,7 +37,7 @@
                             <th scope="col">tgl input</th>
                             <th scope="col">expired</th>
                             <th scope="col">status</th>
-                            <th scope="col">detail</th>
+                            <th scope="col">edit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,25 +47,23 @@
                         <th scope="row">{{ $loop->iteration }}</th>
                         <td>{{ $user->hwid }}</td>
                         <td>{{ $user->owner }}</td>
-                        <td>{{ $user->keperluan }}</td>
-                        <td>{{ $user->host }}</td>
+                        <td>
+                            {{ 
+                                Carbon\Carbon::now()->diffInDays($user->expired_date, false)>0 ? 
+                                Carbon\Carbon::now()->diffInDays($user->expired_date, false) : 0
+                            }}
+                        </td>
                         <td>{{ $user->created_at }}</td>
                         <td>{{ $user->expired_date }}</td>
-                        <td>{{ $user->status }}</td>
+                        <td>{{ $user->status == 1 ? 'Aktif':'Nonaktif' }}</td>
                         <td>
                             @if ($user->status != 1)
-                                <a class="btn btn-sm btn-success" data-toggle="tooltip" data-title="Detail Transaksi" href="javascript:void(0)" onclick="konfirmasi({{ $user->id }}, 'konfirmasi', '1')"><i data-feather="check-circle" width="20"></i></a> 
+                                <a class="btn btn-sm btn-success" data-toggle="tooltip" data-title="Detail Transaksi" href="javascript:void(0)" onclick="change_status({{ $user->id }}, 1)"><i data-feather="check-circle" width="20"></i></a> 
                             @else
-                                <a class="btn btn-sm disabled btn-light" data-toggle="tooltip" data-title="Detail Transaksi" href="javascript:void(0)"><i data-feather="check-circle" width="20"></i></a> 
+                                <a class="btn btn-sm btn-danger" data-toggle="tooltip" data-title="Detail Transaksi" href="javascript:void(0)" onclick="change_status({{ $user->id }}, 0)"><i data-feather="check-circle" width="20"></i></a> 
                             @endif
 
-                            <a class="btn btn-sm btn-info" data-toggle="modal" href="#edit_data_{{ $loop->iteration }}" onclick="beforeinputDate({{ $loop->iteration }})"><i data-feather="edit" width="20"></i></a>
-
-                            @if ($user->konfirmasi != 1)
-                            <a class="btn btn-sm btn-danger" data-toggle="tooltip" data-title="Detail Transaksi" href="javascript:void(0)" onclick="konfirmasi({{ $user->id }}, 'batalkan', '2')"><i data-feather="trash-2" width="20"></i></a> 
-                            @else
-                                <a class="btn btn-sm disabled btn-light" data-toggle="tooltip" data-title="Detail Transaksi" href="javascript:void(0)"><i data-feather="trash-2" width="20"></i></a> 
-                            @endif
+                            <a class="btn btn-sm btn-info" data-toggle="modal" href="#edit_data_{{ $loop->iteration }}"><i data-feather="edit" width="20"></i></a>
 
                         </td>
 
@@ -87,42 +85,37 @@
                             {{-- form --}}
                             <form>
                                 <div class="modal-body">
-                                    <label>*Nama Unit Kerja: </label>
+                                    <label>*HWID: </label>
                                     <div class="form-group">
-                                        <input type="text" placeholder="Nama unit kerja" class="form-control" name="nama_pengaju" value="{{ $user->nama_pengaju }}" required>
-                                        <input type="hidden" name="id" value="{{ $user->id }}">
+                                        <input type="text" value="{{ $user->hwid }}" class="form-control" name="hwid" minlength="36" required>
+                                        <input type="hidden" value="{{ $user->id }}" class="form-control" name="id" required>
                                     </div>
-
-                                    <label>*Email: </label>
+        
+                                    <label>Owner: </label>
                                     <div class="form-group">
-                                        <input type="email" placeholder="Email Address" class="form-control" name="email" value="{{ $user->email }}" required>
+                                        <input type="text" value="{{ $user->owner }}" class="form-control" name="owner">
                                     </div>
-
-                                    <label>*Keperluan: </label>
+        
+                                    <label>*Server: </label>
                                     <div class="form-group">
-                                        <input type="text" placeholder="Acara / Kegiatan" class="form-control" name="keperluan" value="{{ $user->keperluan }}" required>
-                                    </div>
-
-                                    <label>*Host: </label>
-                                    <div class="form-group">
-                                        <select class="form-select" name="host" required>
-                                            <option value="PIPS" 
-                                            @if ($user->host == 'PIPS')
-                                                selected
-                                            @endif >PIPS</option>
-                                            <option value="Pribadi" 
-                                            @if ($user->host == 'Pribadi')
-                                                selected
-                                            @endif >Pribadi</option>
+                                        <select class="form-select" name="server_ao" required>
+                                            {{-- hardcode --}}
+                                            <option value="0">Semua</option>
+                                            <option value="1">Kecuali Atlantica Indonisia</option>
                                         </select>
                                     </div>
-
-                                    <label>*Tanggal: </label>
+        
+                                    <label>*expired date: </label>
                                     <div class="form-group">
-                                    <input class="form-control" type="date" name="tanggal" required>
+                                        <input type="datetime-local" value="{{ Carbon\Carbon::parse($user->expired_date)->format('Y-m-d\TH:i') }}" class="form-control" name="expired_date" required>
                                     </div>
+        
+                                    <label>Keterangan: </label>
+                                    <div class="form-group">
+                                        <input type="text" value="{{ $user->keterangan }}" class="form-control" name="keterangan">
+                                    </div><br>
                                 </div>
-
+        
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
                                     <i class="bx bx-x d-block d-sm-none"></i>
@@ -137,7 +130,7 @@
                         </div>
                     </div>
 
-                    {{-- Modal button Edit Edit --}}
+                    {{-- Modal button Edit End --}}
 
 
                     @endforeach
@@ -158,12 +151,12 @@
                     </div>
 
                     {{-- form --}}
-                    <form id='tembah_user'>
+                    <form id='tambah_user'>
                         <div class="modal-body">
                             <label>---- USER ----</label><br><br>
                             <label>*HWID: </label>
                             <div class="form-group">
-                                <input type="text" placeholder="HWID" class="form-control" name="hwid" required>
+                                <input type="text" placeholder="HWID" class="form-control" name="hwid" minlength="36" id='tambah_hwid' required>
                             </div>
 
                             <label>Owner: </label>
@@ -173,7 +166,8 @@
 
                             <label>*Server: </label>
                             <div class="form-group">
-                                <select class="form-select" name="server" required>
+                                <select class="form-select" name="server_ao" required>
+                                    {{-- hardcode --}}
                                     <option value="0">Semua</option>
                                     <option value="1">Kecuali Atlantica Indonisia</option>
                                 </select>
@@ -181,7 +175,7 @@
 
                             <label>*Bulan: </label>
                             <div class="form-group">
-                                <input type="number" placeholder="pendaftaran untuk berapa bulan" class="form-control" name="bulan" required>
+                                <input type="number" placeholder="pendaftaran untuk berapa bulan" class="form-control" name="bulan" min=1 required>
                             </div>
 
                             <label>Keterangan: </label>
@@ -193,13 +187,14 @@
 
                             <label>*Via: </label>
                             <div class="form-group">
-                                <input type="text" placeholder="Bank Mandiri/BCA/Ovo/dkk" class="form-control" name="keterangan">
+                                <input type="text" placeholder="Bank Mandiri/BCA/Ovo/dkk" class="form-control" name="via" required>
                             </div>
                             <label>*Atas Nama: </label>
                             <div class="form-group">
                                 <select class="form-select" name="atas_nama" required>
-                                    <option value="0">Zaenal</option>
-                                    <option value="1">Rizky</option>
+                                    {{-- hardcode --}}
+                                    <option value="zaenal">Zaenal</option>
+                                    <option value="rizky">Rizky</option>
                                 </select>
                             </div>
                         </div>
@@ -218,7 +213,70 @@
                 </div>
             </div>
 
-            {{-- Modal button Add Edit --}}
+            {{-- Modal button Add End --}}
+
+            {{-- Modal button Perpanjangan Bot --}}
+
+            <div class="modal fade text-left" id="perpanjangan_bot" tabindex="-1" role="dialog"
+                aria-labelledby="modal_add" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h4 class="modal-title" id="modal_add">Tambah User </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                    </div>
+
+                    {{-- form --}}
+                    <form id='tembah_user'>
+                        <div class="modal-body">
+                            <label>---- USER ----</label><br><br>
+                            <label>*HWID: </label>
+                            <div class="form-group">
+                                <select class="form-select" name="id" required>
+                                    @foreach ($pendaftar as $user)
+                                        <option value="{{$user->id}}">{{$user->hwid}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <label>*Bulan: </label>
+                            <div class="form-group">
+                                <input type="number" placeholder="perpanjangan untuk berapa bulan" class="form-control" name="bulan" min=1 required>
+                            </div><br>
+
+                            <label>---- PEMBAYARAN ----</label><br><br>
+
+                            <label>*Via: </label>
+                            <div class="form-group">
+                                <input type="text" placeholder="Bank Mandiri/BCA/Ovo/dkk" class="form-control" name="via" required>
+                            </div>
+                            <label>*Atas Nama: </label>
+                            <div class="form-group">
+                                <select class="form-select" name="atas_nama" required>
+                                    {{-- hardcode --}}
+                                    <option value="zaenal">Zaenal</option>
+                                    <option value="rizky">Rizky</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Close</span>
+                            </button>
+                            <button type="submit" class="btn btn-primary mr-1 mb-1">Submit</button>
+                        </div>
+                    </form>
+                    {{-- form End --}}
+
+                </div>
+                </div>
+            </div>
+
+            {{-- Modal button Perpanjangan Bot End --}}
 
         </div>
     </div>
@@ -245,17 +303,17 @@
             rowReorder: {
                 selector: 'td:nth-child(2)'
             },
-            columnDefs: [
-                {
-                    targets: 9,
-                    className: 'dt-body-center'
-                }
-            ],
             buttons: [
                 {
                     text: 'Tambah User',
                     action: function ( e, dt, node, config ) {
                         $('#add_data').modal('show');
+                    }
+                },
+                {
+                    text: 'Perpanjangan Bot',
+                    action: function ( e, dt, node, config ) {
+                        $('#perpanjangan_bot').modal('show');
                     }
                 }
             ],
@@ -269,18 +327,18 @@
 @section('js_script')
 <script>
 
-    /* Send Form */
+    /* Send Form Add */
     $( "form" ).on( "submit", function( e ) {
 		e.preventDefault();
         var valid=true;
         var token = $('meta[name="csrf-token"]').attr('content');
 		//generalisasi form agar data file bisa masuk
 		var form = $(this)[0];
-        if($('#tanggal_').val() != ''){
-            var url = "{{ url('/Confirmation') }}";
-            var status = 'tambahkan';
+        if($('#tambah_hwid').val() != ''){
+            var url = "{{ url('/add_users') }}";
+            var status = 'tambah';
         }else{
-            var url = "{{ url('/Update_Users') }}";
+            var url = "{{ url('/update_users') }}";
             var status = 'ubah';
         }
 		//mengambil semua data di dalam form
@@ -322,71 +380,69 @@
 						processData: false,
 						//jika ajax sukses
 						success: function(data){
-                            swal.fire({
-                            title:"Data berhasil di"+status,
-                            text: "Apakah anda ingin memberitahu pengguna jika jadwal telah di"+status,
-                            icon: 'info',
-                            showCancelButton: true,
-                            confirmButtonColor: "#1da1f2",
-                            confirmButtonText: "Ya",
-                            cancelButtonColor: '#d33',
-                            cancelButtonText: "Tidak",
-                            closeOnConfirm: false,
-                            showLoaderOnConfirm: true,
-                            }).then((result) => {
-                                if (result.value) {
-                                    id = data.replace(/"/g, '');
-                                    konfirmasi(id, status, '');
-                                }else{
-                                    location.reload();
-                                }
-                            });
+                            // location.reload();
 						},
 						//jika ajax gagal
-						error: function (xhr, ajaxOptions, thrownError) {
-							setTimeout(function(){
-								swal.fire("Error", "Periksa koneksi anda", "error");
-							}, 2000);
+						error: function () {
+                            if(status == 'tambah'){
+                                swal.fire("Error", "HWID Telah Digunakan", "error");
+                            }else{
+                                swal.fire("Error", "Periksa koneksi anda", "error");
+                            }
 						}
 					});
 				}
 			})
 		}
-	});
+    });
     /* Send Form End */
-
-    /* Send Email Approval */
-    function konfirmasi(id, status, konfirmasi){
-            var token = $('meta[name="csrf-token"]').attr('content');
-            var title = 'penjadwalan berhasil di'+status;
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': token
-                },
-                url: "{{ url('/Send_notif') }}",
-                type: "POST",
-                data: {
-                        id: id,
-                        status: status,
-                        konfirmasi: konfirmasi
+    
+    /* Change Status Start */
+    function change_status(id,status){
+        let token = $('meta[name="csrf-token"]').attr('content');
+        let status_success = status == 1 ? 'aktif' : 'Nonaktif';
+        Swal.fire({
+            title: 'Konfirmasi perubahan status',
+            text: "status akan dirubah menjadi "+status_success,
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: "#1da1f2",
+            confirmButtonText: "Yakin, dong!",
+            cancelButtonColor: '#d33',
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true,
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': token
                     },
-                async : false,
-                dataType : 'json',
-                //jika ajax sukses
-                success: function(data){
-                    swal.fire({
-                    title: title,
-                    html: "notifikasi telah dikirim pada email <br>"+data,
-                    icon: "success"
-                    }).then((result) => {
-                        if (result.value) {
-                            location.reload();
-                        }
-                    })
-                },
-            });
-        }
-    /* Send Email Approval End */
-
+                    url: "{{ url('/update_users') }}",
+                    type: "POST",
+                    data: {
+                            id: id,
+                            status: status,
+                        },
+                    async : false,
+                    dataType : 'json',
+                    //jika ajax sukses
+                    success: function(data){
+                        swal.fire({
+                            title: 'Status berhasil dirubah',
+                            text: "Status user sekarang "+status_success,
+                            icon: "success"
+                            }).then((result) => {
+                                location.reload();
+                        })
+                    },
+                    //jika ajax gagal
+                    error: function () {
+                        swal.fire("Error", "Periksa koneksi anda", "error");
+                    }
+                });
+            }
+        })
+    }
+    /* Change Status End */
 </script>
 @endsection

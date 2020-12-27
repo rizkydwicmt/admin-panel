@@ -26,6 +26,8 @@ $router->group(['prefix' => 'akses_admin'], function () use ($router) {
 });
 
 /* Users */
+Route::post('add_users', 'UserController@create');
+Route::post('update_users', 'UserController@update');
 
 // Route::get('/', 'UsersController@home');
 // Route::get('Tanggal', 'UsersController@get_tanggal');

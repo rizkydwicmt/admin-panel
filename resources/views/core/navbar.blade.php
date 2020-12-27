@@ -22,7 +22,7 @@
         ">
             <a href="#" class='sidebar-link'>
                 <i data-feather="layers" width="20"></i> 
-                <span>Penjadwalan</span>
+                <span>Users</span>
             </a>
             
             <ul class="
@@ -35,14 +35,78 @@
                         Request::is('akses_admin/list_user') ? 'color: #96d4f9;border-right: solid;' : '' 
                     }} 
                 ">
-                    <a href="{{ url('akses_admin/list_user') }}">List penjadwalan</a>
+                    <a href="{{ url('akses_admin/list_user') }}">List user</a>
                 </li>
                 <li style="
                     {{ 
                         Request::is('akses_admin/kelola_user') ? 'color: #96d4f9;border-right: solid;' : '' 
                     }} 
                 ">
-                    <a href="{{ url('akses_admin/kelola_user') }}">Kelola penjadwalan</a>
+                    <a href="{{ url('akses_admin/kelola_user') }}">Kelola user</a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="
+            sidebar-item  has-sub 
+            {{ Request::is('akses_admin/list_transaksi') ? 'active' : '' }} 
+            {{ Request::is('akses_admin/kelola_transaksi') ? 'active' : '' }}
+        ">
+            <a href="#" class='sidebar-link'>
+                <i data-feather="layers" width="20"></i> 
+                <span>Transaksi</span>
+            </a>
+            
+            <ul class="
+                submenu 
+                {{ Request::is('akses_admin/list_transaksi') ? 'active' : '' }} 
+                {{ Request::is('akses_admin/kelola_transaksi') ? 'active' : '' }}
+            ">
+                <li style="
+                    {{ 
+                        Request::is('akses_admin/list_transaksi') ? 'color: #96d4f9;border-right: solid;' : '' 
+                    }} 
+                ">
+                    <a href="{{ url('akses_admin/list_transaksi') }}">List transaksi</a>
+                </li>
+                <li style="
+                    {{ 
+                        Request::is('akses_admin/kelola_transaksi') ? 'color: #96d4f9;border-right: solid;' : '' 
+                    }} 
+                ">
+                    <a href="{{ url('akses_admin/kelola_transaksi') }}">Kelola transaksi</a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="
+            sidebar-item  has-sub 
+            {{ Request::is('akses_admin/list_bot') ? 'active' : '' }} 
+            {{ Request::is('akses_admin/kelola_bot') ? 'active' : '' }}
+        ">
+            <a href="#" class='sidebar-link'>
+                <i data-feather="layers" width="20"></i> 
+                <span>Bot</span>
+            </a>
+            
+            <ul class="
+                submenu 
+                {{ Request::is('akses_admin/list_bot') ? 'active' : '' }} 
+                {{ Request::is('akses_admin/kelola_bot') ? 'active' : '' }}
+            ">
+                <li style="
+                        {{ 
+                            Request::is('akses_admin/list_bot') ? 'color: #96d4f9;border-right: solid;' : '' 
+                        }} 
+                    ">
+                        <a href="{{ url('akses_admin/list_bot') }}">List transaksi</a>
+                    </li>
+                    <li style="
+                        {{ 
+                            Request::is('akses_admin/kelola_bot') ? 'color: #96d4f9;border-right: solid;' : '' 
+                        }} 
+                    ">
+                        <a href="{{ url('akses_admin/kelola_bot') }}">Kelola transaksi</a>
                 </li>
             </ul>
         </li>

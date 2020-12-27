@@ -17,10 +17,11 @@ class CreateUserTable extends Migration
             $table->id();
             $table->string('hwid')->unique();
             $table->string('owner');
-            $table->string('keterangan');
             $table->string('server');
-            $table->boolean('status');
+            $table->string('keterangan');
             $table->timestamp('expired_date', 0)->nullable();
+            $table->boolean('status');
+            $table->string('created_by');
             $table->timestamps();
         });
     }
