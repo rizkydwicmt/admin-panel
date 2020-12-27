@@ -99,14 +99,14 @@
                             Request::is('akses_admin/list_bot') ? 'color: #96d4f9;border-right: solid;' : '' 
                         }} 
                     ">
-                        <a href="{{ url('akses_admin/list_bot') }}">List transaksi</a>
+                        <a href="{{ url('akses_admin/list_bot') }}">List bot</a>
                     </li>
                     <li style="
                         {{ 
                             Request::is('akses_admin/kelola_bot') ? 'color: #96d4f9;border-right: solid;' : '' 
                         }} 
                     ">
-                        <a href="{{ url('akses_admin/kelola_bot') }}">Kelola transaksi</a>
+                        <a href="{{ url('akses_admin/kelola_bot') }}">Kelola bot</a>
                 </li>
             </ul>
         </li>

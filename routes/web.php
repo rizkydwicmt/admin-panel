@@ -23,11 +23,16 @@ $router->group(['prefix' => 'akses_admin'], function () use ($router) {
     Route::get('/', 'AdminController@dashboard');
     Route::get('/list_user', 'AdminController@list_user');
     Route::get('/kelola_user', 'AdminController@kelola_user');
+    Route::get('/list_transaksi', 'AdminController@list_transaksi');
+    Route::get('/kelola_transaksi', 'AdminController@kelola_transaksi');
 });
 
 /* Users */
 Route::post('add_users', 'UserController@create');
 Route::post('update_users', 'UserController@update');
+
+/* Transaksi */
+Route::post('update_transaksi', 'transaksiController@update');
 
 // Route::get('/', 'UsersController@home');
 // Route::get('Tanggal', 'UsersController@get_tanggal');

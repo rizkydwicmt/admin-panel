@@ -32,35 +32,30 @@
                     <tr>
                         <th scope="col">#</th>
                             <th scope="col">hwid</th>
-                            <th scope="col">owner</th>
-                            <th scope="col">sisa hari</th>
-                            <th scope="col">tgl input</th>
-                            <th scope="col">expired</th>
+                            <th scope="col">operator</th>
+                            <th scope="col">atas_nama</th>
+                            <th scope="col">via</th>
+                            <th scope="col">tanggal transaksi</th>
                             <th scope="col">status</th>
                             <th scope="col">edit</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($pendaftar as $user)
+                    @foreach ($transaksi as $data)
                         @csrf
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
-                        <td>{{ $user->hwid }}</td>
-                        <td>{{ $user->owner }}</td>
+                        <td>{{ $data->hwid }}</td>
+                        <td>{{ $data->username }}</td>
+                        <td>{{ $data->atas_nama }}</td>
+                        <td>{{ $data->via }}</td>
+                        <td>{{ $data->created_at }}</td>
+                        <td>{{ $data->status == 1 ? 'Terbayar':'Dibatalkan' }}</td>
                         <td>
-                            {{ 
-                                Carbon\Carbon::now()->diffInDays($user->expired_date, false)>0 ? 
-                                Carbon\Carbon::now()->diffInDays($user->expired_date, false) : 0
-                            }}
-                        </td>
-                        <td>{{ $user->created_at }}</td>
-                        <td>{{ $user->expired_date }}</td>
-                        <td>{{ $user->status == 1 ? 'Aktif':'Nonaktif' }}</td>
-                        <td>
-                            @if ($user->status != 1)
-                                <a class="btn btn-sm btn-success" data-toggle="tooltip" data-title="Detail Transaksi" href="javascript:void(0)" onclick="change_status({{ $user->id }}, 1)"><i data-feather="check-circle" width="20"></i></a> 
+                            @if ($data->status != 1)
+                                <a class="btn btn-sm btn-success" data-toggle="tooltip" data-title="Detail Transaksi" href="javascript:void(0)" onclick="change_status({{ $data->id }}, 1)"><i data-feather="check-circle" width="20"></i></a> 
                             @else
-                                <a class="btn btn-sm btn-danger" data-toggle="tooltip" data-title="Detail Transaksi" href="javascript:void(0)" onclick="change_status({{ $user->id }}, 0)"><i data-feather="check-circle" width="20"></i></a> 
+                                <a class="btn btn-sm btn-danger" data-toggle="tooltip" data-title="Detail Transaksi" href="javascript:void(0)" onclick="change_status({{ $data->id }}, 0)"><i data-feather="check-circle" width="20"></i></a> 
                             @endif
 
                             <a class="btn btn-sm btn-info" data-toggle="modal" href="#edit_data_{{ $loop->iteration }}"><i data-feather="edit" width="20"></i></a>
@@ -87,32 +82,23 @@
                                 <div class="modal-body">
                                     <label>*HWID: </label>
                                     <div class="form-group">
-                                        <input type="text" value="{{ $user->hwid }}" class="form-control" name="hwid" minlength="36" required>
-                                        <input type="hidden" value="{{ $user->id }}" class="form-control" name="id" required>
+                                        <input type="text" value="{{ $data->hwid }}" class="form-control" name="hwid" minlength="36" readonly>
+                                        <input type="hidden" value="{{ $data->id }}" class="form-control" name="id" required>
                                     </div>
         
-                                    <label>Owner: </label>
+                                    <label>*Operator: </label>
                                     <div class="form-group">
-                                        <input type="text" value="{{ $user->owner }}" class="form-control" name="owner">
+                                        <input type="text" value="{{ $data->username }}" class="form-control" name="owner" readonly>
                                     </div>
         
-                                    <label>*Server: </label>
+                                    <label>*Atas nama: </label>
                                     <div class="form-group">
-                                        <select class="form-select" name="server_ao" required>
-                                            {{-- hardcode --}}
-                                            <option value="0">Semua</option>
-                                            <option value="1">Kecuali Atlantica Indonisia</option>
-                                        </select>
+                                        <input type="text" value="{{ $data->atas_nama }}" class="form-control" name="atas_nama" required>
                                     </div>
-        
-                                    <label>*expired date: </label>
+                                    
+                                    <label>*Via: </label>
                                     <div class="form-group">
-                                        <input type="datetime-local" value="{{ Carbon\Carbon::parse($user->expired_date)->format('Y-m-d\TH:i') }}" class="form-control" name="expired_date" required>
-                                    </div>
-        
-                                    <label>Keterangan: </label>
-                                    <div class="form-group">
-                                        <input type="text" value="{{ $user->keterangan }}" class="form-control" name="keterangan">
+                                        <input type="text" value="{{ $data->via }}" class="form-control" name="via" required>
                                     </div><br>
                                 </div>
         
@@ -243,7 +229,7 @@
 
                             <label>*Bulan: </label>
                             <div class="form-group">
-                                <input type="number" placeholder="perpanjangan untuk berapa bulan" class="form-control" name="bulan" min=1 required>
+                                <input type="number" placeholder="perpanjangan untuk berapa bulan" class="form-control" name="bulan" min=1 id="perpanjang_hwid" required>
                             </div><br>
 
                             <label>---- PEMBAYARAN ----</label><br><br>
@@ -316,7 +302,7 @@
                     action: function ( e, dt, node, config ) {
                         $('#perpanjangan_bot').modal('show');
                     }
-                }
+                },
             ],
             responsive: true
         });
@@ -338,8 +324,11 @@
         if($('#tambah_hwid').val() != ''){
             var url = "{{ url('/add_users') }}";
             var status = 'tambah';
-        }else{
+        }else if($('#perpanjang_hwid').val() != ''){
             var url = "{{ url('/update_users') }}";
+            var status = 'ubah';
+        }else{
+            var url = "{{ url('/update_transaksi') }}";
             var status = 'ubah';
         }
 		//mengambil semua data di dalam form
@@ -381,7 +370,7 @@
 						processData: false,
 						//jika ajax sukses
 						success: function(data){
-                            // location.reload();
+                            location.reload();
 						},
 						//jika ajax gagal
 						error: function () {
@@ -401,7 +390,7 @@
     /* Change Status Start */
     function change_status(id,status){
         let token = $('meta[name="csrf-token"]').attr('content');
-        let status_success = status == 1 ? 'aktif' : 'Nonaktif';
+        let status_success = status == 1 ? 'Terbayar' : 'Dibatalkan';
         Swal.fire({
             title: 'Konfirmasi perubahan status',
             text: "status akan dirubah menjadi "+status_success,
@@ -418,7 +407,7 @@
                     headers: {
                         'X-CSRF-TOKEN': token
                     },
-                    url: "{{ url('/update_users') }}",
+                    url: "{{ url('/update_transaksi') }}",
                     type: "POST",
                     data: {
                             id: id,
@@ -430,7 +419,7 @@
                     success: function(data){
                         swal.fire({
                             title: 'Status berhasil dirubah',
-                            text: "Status user sekarang "+status_success,
+                            text: "Status transaksi sekarang "+status_success,
                             icon: "success"
                             }).then((result) => {
                                 location.reload();

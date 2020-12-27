@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller; 
 
 use App\Models\User;
+use App\Models\Transaksi;
 
 class AdminController extends Controller
 {
@@ -35,5 +36,22 @@ class AdminController extends Controller
     {
         $users = array('pendaftar' =>  User::get() );
         return view('konten/kelola_user', $users);
+    }
+
+    public function list_transaksi()
+    {
+        $transaksi = array(
+                            'transaksi' => Transaksi::orderBy('created_at', 'DESC')->get() 
+                        );
+        return view('konten/list_transaksi', $transaksi);
+    }
+
+    public function kelola_transaksi()
+    {
+        $transaksi = array(
+                            'pendaftar' =>  User::get(),
+                            'transaksi' =>  Transaksi::orderBy('created_at', 'DESC')->get() 
+                        );
+        return view('konten/kelola_transaksi', $transaksi);
     }
 }
