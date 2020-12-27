@@ -2,8 +2,8 @@
 @extends('core/navbar')
 @extends('core/footer')
 
-@section('title', 'List Transaksi - Admin Panel')
-@section('page-title', 'List Transaksi')
+@section('title', 'List Bot - Admin Panel')
+@section('page-title', 'List Bot')
 @section('page-subtitle', '')
 
 @section('css')
@@ -26,32 +26,25 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">serverid</th>
                         <th scope="col">hwid</th>
-                        <th scope="col">owner</th>
-                        <th scope="col">sisa hari</th>
-                        <th scope="col">tgl input</th>
-                        <th scope="col">expired</th>
+                        <th scope="col">botid</th>
+                        <th scope="col">bot version</th>
+                        <th scope="col">ip</th>
                         <th scope="col">status</th>
-                        <th scope="col">detail</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($pendaftar as $user)
+                    @foreach ($bot as $data)
                         @csrf
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
-                        <td>{{ $user->hwid }}</td>
-                        <td>{{ $user->owner }}</td>
-                        <td>
-                            {{ 
-                                Carbon\Carbon::now()->diffInDays($user->expired_date, false)>0 ? 
-                                Carbon\Carbon::now()->diffInDays($user->expired_date, false) : 0
-                            }}
-                        </td>
-                        <td>{{ $user->created_at }}</td>
-                        <td>{{ $user->expired_date }}</td>
-                        <td>{{ $user->status == 1 ? 'Aktif':'Nonaktif' }}</td>
-                        <td>detail</td>
+                        <td>{{ $data->serverid }}</td>
+                        <td>{{ $data->hwid }}</td>
+                        <td>{{ $data->botid }}</td>
+                        <td>{{ $data->version }}</td>
+                        <td>{{ $data->ip }}</td>
+                        <td>{{ $data->status == 1 ? 'Aktif':'Nonaktif' }}</td>
                     </tr>
                     
                     @endforeach
@@ -59,13 +52,12 @@
                 <tfoot>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">serverid</th>
                         <th scope="col">hwid</th>
-                        <th scope="col">owner</th>
-                        <th scope="col">sisa hari</th>
-                        <th scope="col">tgl input</th>
-                        <th scope="col">expired</th>
+                        <th scope="col">botid</th>
+                        <th scope="col">bot version</th>
+                        <th scope="col">ip</th>
                         <th scope="col">status</th>
-                        <th scope="col">detail</th>
                     </tr>
                 </tfoot>
             </table>

@@ -2,9 +2,9 @@
 @extends('core/navbar')
 @extends('core/footer')
 
-@section('title', 'List Penjadwalan - Admin Panel Pengajuan Webinar')
-@section('page-title', 'Kelolah Penjadwalan')
-@section('page-subtitle', 'Digunakan untuk mengelolah penjadwalan dari mengkonfirmasi sampai rescedule yang kemudian akan dikirimkan ke email')
+@section('title', 'Kelola User - Admin Panel')
+@section('page-title', 'Kelola User')
+@section('page-subtitle', '')
 
 @section('css')
 <!--===============================================================================================-->

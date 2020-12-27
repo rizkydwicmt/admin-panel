@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller; 
 
 use App\Models\User;
+use App\Models\UserDetail;
 use App\Models\Transaksi;
 
 class AdminController extends Controller
@@ -53,5 +54,13 @@ class AdminController extends Controller
                             'transaksi' =>  Transaksi::orderBy('created_at', 'DESC')->get() 
                         );
         return view('konten/kelola_transaksi', $transaksi);
+    }
+
+    public function list_bot()
+    {
+        $bot = array(
+                    'bot' => UserDetail::get() 
+                );
+        return view('konten/list_bot', $bot);
     }
 }

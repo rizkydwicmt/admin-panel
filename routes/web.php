@@ -25,6 +25,7 @@ $router->group(['prefix' => 'akses_admin'], function () use ($router) {
     Route::get('/kelola_user', 'AdminController@kelola_user');
     Route::get('/list_transaksi', 'AdminController@list_transaksi');
     Route::get('/kelola_transaksi', 'AdminController@kelola_transaksi');
+    Route::get('/list_bot', 'AdminController@list_bot');
 });
 
 /* Users */

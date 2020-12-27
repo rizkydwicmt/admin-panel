@@ -2,10 +2,9 @@
 @extends('core/navbar')
 @extends('core/footer')
 
-@section('title', 'List Penjadwalan - Admin Panel Pengajuan Webinar')
-@section('page-title', 'List Penjadwalan')
-@section('page-subtitle', 'Ini adalah list penjadwalan webinar')
-
+@section('title', 'List Transaksi - Admin Panel')
+@section('page-title', 'List Transaksi')
+@section('page-subtitle', '')
 @section('css')
 <!--===============================================================================================-->
     <link href="{{ asset('/vendors/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
@@ -32,7 +31,6 @@
                             <th scope="col">via</th>
                             <th scope="col">tanggal transaksi</th>
                             <th scope="col">status</th>
-                            <th scope="col">detail</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,11 +44,21 @@
                         <td>{{ $data->via }}</td>
                         <td>{{ $data->created_at }}</td>
                         <td>{{ $data->status == 1 ? 'Terbayar':'Dibatalkan' }}</td>
-                        <td>detail</td>
                     </tr>
                     
                     @endforeach
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">hwid</th>
+                        <th scope="col">operator</th>
+                        <th scope="col">atas_nama</th>
+                        <th scope="col">via</th>
+                        <th scope="col">tanggal transaksi</th>
+                        <th scope="col">status</th>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -84,6 +92,33 @@
             ],
             rowReorder: {
                 selector: 'td:nth-child(2)'
+            },
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+                    var select = $('<select style="width:50px"><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+     
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+     
+                    column.data().unique().sort().each( function ( d, j ) {
+                        var val = $.fn.dataTable.util.escapeRegex(d);
+                        if (column.search() === "^" + val + "$") {
+                          select.append(
+                            '<option value="' + d + '" selected="selected">' + d.substr(0,55) + "</option>"
+                          );
+                        } else {
+                          select.append('<option value="' + d + '">' + d.substr(0,55) + "</option>");
+                        }
+                    } );
+                } );
             },
             responsive: true
         });
