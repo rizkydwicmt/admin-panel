@@ -42,6 +42,7 @@
                 </div>
                 <section class="section">
                     @yield('konten')
+                    @extends('core/profile')
                 </section>
             </div>
 

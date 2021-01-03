@@ -14,7 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $salt = 'aobot';
         $datas = [
             [
                 'username' => 'zaenal', 
@@ -31,7 +30,7 @@ class DatabaseSeeder extends Seeder
 
             $query = Admin::create([
                 'username' => $data['username'], 
-                'password' => sha1($data['password'].$salt),
+                'password' => bcrypt($data['password'].env('SALT')),
                 'status' => 1,
             ]);
 

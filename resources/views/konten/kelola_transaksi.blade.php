@@ -75,7 +75,7 @@
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                            <h4 class="modal-title" id="modal_edit">Edit penjadwalan </h4>
+                            <h4 class="modal-title" id="modal_edit">Edit Transaksi </h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <i data-feather="x"></i>
                             </button>
@@ -103,6 +103,26 @@
                                     <label>*Via: </label>
                                     <div class="form-group">
                                         <input type="text" value="{{ $data->via }}" class="form-control" name="via" required>
+                                    </div>
+
+                                    <label>Harga: </label>
+                                    <div class="form-group">
+                                        <input type="text" value="{{ $data->harga }}" class="form-control" disabled>
+                                    </div>
+                                    
+                                    <label>Status: </label>
+                                    <div class="form-group">
+                                        <input type="text" value="{{ $data->status == 1 ? 'Aktif':'Nonaktif' }}" class="form-control" disabled>
+                                    </div>
+                                    
+                                    <label>Tanggal Input: </label>
+                                    <div class="form-group">
+                                        <input type="text" value="{{ $data->created_at }}" class="form-control" disabled>
+                                    </div>
+
+                                    <label>terakhir diupdate: </label>
+                                    <div class="form-group">
+                                        <input type="text" value="{{ $data->updated_at }}" class="form-control" disabled>
                                     </div><br>
                                 </div>
         
@@ -159,7 +179,7 @@
                                 <select class="form-select" name="server_ao" required>
                                     {{-- hardcode --}}
                                     <option value="0">Semua</option>
-                                    <option value="1">Kecuali Atlantica Indonisia</option>
+                                    <option value="1">Kecuali Atlantica Indonesia</option>
                                 </select>
                             </div>
 

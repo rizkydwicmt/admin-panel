@@ -76,7 +76,7 @@
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                            <h4 class="modal-title" id="modal_edit">Edit penjadwalan </h4>
+                            <h4 class="modal-title" id="modal_edit">Edit Users </h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <i data-feather="x"></i>
                             </button>
@@ -85,6 +85,11 @@
                             {{-- form --}}
                             <form>
                                 <div class="modal-body">
+                                    <label>operator: </label>
+                                    <div class="form-group">
+                                        <input type="text" value="{{ $user->created_by }}" class="form-control" disabled>
+                                    </div>
+
                                     <label>*HWID: </label>
                                     <div class="form-group">
                                         <input type="text" value="{{ $user->hwid }}" class="form-control" name="hwid" minlength="36" required>
@@ -101,7 +106,7 @@
                                         <select class="form-select" name="server_ao" required>
                                             {{-- hardcode --}}
                                             <option value="0">Semua</option>
-                                            <option value="1">Kecuali Atlantica Indonisia</option>
+                                            <option value="1">Kecuali Atlantica Indonesia</option>
                                         </select>
                                     </div>
         
@@ -113,7 +118,23 @@
                                     <label>Keterangan: </label>
                                     <div class="form-group">
                                         <input type="text" value="{{ $user->keterangan }}" class="form-control" name="keterangan">
-                                    </div><br>
+                                    </div>
+
+                                    <label>status: </label>
+                                    <div class="form-group">
+                                        <input type="text" value="{{ $user->status == 1 ? 'Aktif':'Nonaktif' }}" class="form-control" disabled>
+                                    </div>
+                                    
+                                    <label>tanggal input: </label>
+                                    <div class="form-group">
+                                        <input type="text" value="{{ $user->created_at }}" class="form-control" disabled>
+                                    </div>
+
+                                    <label>terakhir diupdate: </label>
+                                    <div class="form-group">
+                                        <input type="text" value="{{ $user->updated_at }}" class="form-control" disabled>
+                                    </div>
+                                    <br>
                                 </div>
         
                                 <div class="modal-footer">
@@ -169,7 +190,7 @@
                                 <select class="form-select" name="server_ao" required>
                                     {{-- hardcode --}}
                                     <option value="0">Semua</option>
-                                    <option value="1">Kecuali Atlantica Indonisia</option>
+                                    <option value="1">Kecuali Atlantica Indonesia</option>
                                 </select>
                             </div>
 

@@ -33,6 +33,6 @@ class BotVbac extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('bot_vbac');
     }
 }

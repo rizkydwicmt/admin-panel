@@ -1,10 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request; 
-use App\Http\Controllers\Controller; 
 
+use Illuminate\Http\Request; 
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
+
+use App\Http\Controllers\Controller; 
 use App\Models\User;
+use App\Models\Admin;
 use App\Models\UserDetail;
 use App\Models\Transaksi;
 use App\Models\BotVBAC;
@@ -12,6 +16,18 @@ use App\Models\TransaksiVBAC;
 
 class AdminController extends Controller
 {
+    public function update(Request $request)
+    {
+        $admin = Admin::where('username', Session::get('username'))->first();
+
+        if(Hash::check($request->password_lama.env('SALT'), $admin->password)){
+            $admin->update(['password' => bcrypt($request->password.env('SALT'))]);
+            return redirect('akses_admin/login')->with('alert-primary','password berhasil diganti');
+        }
+
+        return redirect('akses_admin')->with('alert-danger','password lama salah');
+    }
+
     public function dashboard()
     {
         $data = array(
@@ -24,7 +40,8 @@ class AdminController extends Controller
             'persen' => 0,
             'color_bulan' => 0,
             'pendaftar' => [],
-            'harga' => (int) env('HARGA_HIGHGAMER',0)
+            'harga' => (int) env('HARGA_HIGHGAMER',0),
+            'salt' => env('SALT')
         );
 
         return view('konten/dashboard', $data);

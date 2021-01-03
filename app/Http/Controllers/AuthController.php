@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 
 use App\Models\Admin;
 
@@ -19,15 +20,13 @@ class AuthController extends Controller
 
     public function cek_login(Request $request)
     {
-        $salt = 'aobot';
         $where = array( 
-            'username' => $request->username, 
-            'password' => sha1($request->password.$salt), 
+            'username' => $request->username,
         );
 
         $query = Admin::where($where)->first();
         
-        if(isset($query->username)){
+        if(Hash::check($request->password.env('SALT'), $query->password)){
             Session::put('username',$query->username);
             return redirect('akses_admin');
         }else{

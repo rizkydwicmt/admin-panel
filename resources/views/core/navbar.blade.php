@@ -15,7 +15,7 @@
             </a>
         </li>
 
-        <li class="
+        {{-- <li class="
             sidebar-item  has-sub 
             {{ Request::is('akses_admin/list_user') ? 'active' : '' }} 
             {{ Request::is('akses_admin/kelola_user') ? 'active' : '' }}
@@ -77,7 +77,7 @@
                     <a href="{{ url('akses_admin/kelola_transaksi') }}">Kelola transaksi</a>
                 </li>
             </ul>
-        </li>
+        </li> --}}
 
         <li class="
             sidebar-item  has-sub 
@@ -93,7 +93,23 @@
                 submenu 
                 {{ Request::is('akses_admin/list_bot') ? 'active' : '' }} 
                 {{ Request::is('akses_admin/kelola_bot') ? 'active' : '' }}
+                {{ Request::is('akses_admin/kelola_transaksi') ? 'active' : '' }}
+                {{ Request::is('akses_admin/kelola_user') ? 'active' : '' }}
             ">
+                <li style="
+                    {{ 
+                        Request::is('akses_admin/kelola_user') ? 'color: #96d4f9;border-right: solid;' : '' 
+                    }} 
+                ">
+                    <a href="{{ url('akses_admin/kelola_user') }}">Kelola user</a>
+                </li>
+                <li style="
+                    {{ 
+                        Request::is('akses_admin/kelola_transaksi') ? 'color: #96d4f9;border-right: solid;' : '' 
+                    }} 
+                ">
+                    <a href="{{ url('akses_admin/kelola_transaksi') }}">Kelola transaksi</a>
+                </li>
                 <li style="
                         {{ 
                             Request::is('akses_admin/list_bot') ? 'color: #96d4f9;border-right: solid;' : '' 
@@ -160,14 +176,12 @@
                         <div class="avatar mr-1">
                             <img src="{{ asset('/assets/images/avatar/avatar-s-1.png') }}" alt="" srcset="">
                         </div>
-                        <div class="d-none d-md-block d-lg-inline-block">Hi, {{Session::get('nama')}}</div>
+                        <div class="d-none d-md-block d-lg-inline-block">Hi, {{Session::get('username')}}</div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#"><i data-feather="user"></i> Account</a>
-                        <a class="dropdown-item" href="#"><i data-feather="mail"></i> Messages</a>
-                        <a class="dropdown-item" href="#"><i data-feather="settings"></i> Settings</a>
+                        <a class="dropdown-item" data-toggle="modal" href="#edit_profile"><i data-feather="settings" width="20"></i> Account</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ url('/akses_admin/Logout') }}"><i data-feather="log-out"></i> Logout</a>
+                        <a class="dropdown-item" href="{{ url('/akses_admin/logout') }}"><i data-feather="log-out"></i> Logout</a>
                     </div>
                 </li>
             </ul>

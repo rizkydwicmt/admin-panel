@@ -33,6 +33,6 @@ class TransaksiVbac extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('transaksi_vbac');
     }
 }

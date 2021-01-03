@@ -40,8 +40,11 @@ $router->group(['prefix' => 'akses_admin'], function () use ($router) {
         /* VBAC */
         Route::get('/vbac/kelola_bot', 'AdminController@kelola_bot_vbac');
         Route::get('/vbac/kelola_transaksi', 'AdminController@kelola_transaksi_vbac');
+        
+        Route::post('/change_password', 'AdminController@update');
     });
 });
+
 
 /* Users */
 Route::post('add_users', 'UserController@create');
