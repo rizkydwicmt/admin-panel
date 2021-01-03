@@ -20,9 +20,8 @@ class Authenticate extends Middleware
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if(session('nama') == null){
-            redirect()->to('akses_admin/login')->send();
-        }
+        if(session('username') == null) return redirect()->to('akses_admin/login')->send();
+        return $next($request);
     }
 
     /**

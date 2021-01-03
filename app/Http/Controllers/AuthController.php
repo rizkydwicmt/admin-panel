@@ -27,8 +27,8 @@ class AuthController extends Controller
 
         $query = Admin::where($where)->first();
         
-        if(isset($query->nama)){
-            Session::put('nama',$query->nama);
+        if(isset($query->username)){
+            Session::put('username',$query->username);
             return redirect('akses_admin');
         }else{
             return redirect('akses_admin/login')->with('alert-danger','Username atau password salah');
