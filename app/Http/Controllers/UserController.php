@@ -27,6 +27,8 @@ class UserController extends Controller
                             'username' => 'zaenal', //hardcode
                             'via' => $request->via,
                             'atas_nama' => $request->atas_nama,
+                            'extend' => $request->bulan,
+                            'harga' => (int) env('HARGA_HIGHGAMER',0),
                             'status' => 1,
                         );
 
@@ -48,6 +50,8 @@ class UserController extends Controller
                                     'username' => 'zaenal', //hardcode
                                     'via' => $request->via,
                                     'atas_nama' => $request->atas_nama,
+                                    'extend' => $request->bulan,
+                                    'harga' => (int) env('HARGA_HIGHGAMER',0)*$request->bulan,
                                     'status' => 1,
                                 );
             

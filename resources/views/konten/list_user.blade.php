@@ -2,8 +2,8 @@
 @extends('core/navbar')
 @extends('core/footer')
 
-@section('title', 'List Transaksi - Admin Panel')
-@section('page-title', 'List Transaksi')
+@section('title', 'List User - Admin Panel')
+@section('page-title', 'List User')
 @section('page-subtitle', '')
 
 @section('css')

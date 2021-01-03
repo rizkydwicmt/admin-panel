@@ -21,7 +21,7 @@ class CreateUserDetailTable extends Migration
             $table->string('version');
             $table->string('nick');
             $table->ipAddress('ip');
-            $table->boolean('status');
+            $table->boolean('status')->comment = '0 Nonaktif, 1 Aktif';
             $table->timestamps();
         });
     }

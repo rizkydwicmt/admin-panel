@@ -111,6 +111,38 @@
             </ul>
         </li>
 
+        <li class="
+            sidebar-item  has-sub 
+            {{ Request::is('akses_admin/vbac/kelola_bot') ? 'active' : '' }} 
+            {{ Request::is('akses_admin/vbac/kelola_transaksi') ? 'active' : '' }}
+        ">
+            <a href="#" class='sidebar-link'>
+                <i data-feather="layers" width="20"></i> 
+                <span>Bot VBAC</span>
+            </a>
+            
+            <ul class="
+                submenu 
+                {{ Request::is('akses_admin/vbac/kelola_bot') ? 'active' : '' }} 
+                {{ Request::is('akses_admin/vbac/kelola_transaksi') ? 'active' : '' }}
+            ">
+                <li style="
+                        {{ 
+                            Request::is('akses_admin/vbac/kelola_bot') ? 'color: #96d4f9;border-right: solid;' : '' 
+                        }} 
+                    ">
+                        <a href="{{ url('akses_admin/vbac/kelola_bot') }}">kelola bot</a>
+                </li>
+                <li style="
+                        {{ 
+                            Request::is('akses_admin/vbac/kelola_transaksi') ? 'color: #96d4f9;border-right: solid;' : '' 
+                        }} 
+                    ">
+                        <a href="{{ url('akses_admin/vbac/kelola_transaksi') }}">Kelola Transaksi</a>
+                </li>
+            </ul>
+        </li>
+
 @endsection
 
 @section('navbar')

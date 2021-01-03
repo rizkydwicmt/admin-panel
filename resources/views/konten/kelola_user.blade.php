@@ -381,7 +381,7 @@
 						processData: false,
 						//jika ajax sukses
 						success: function(data){
-                            // location.reload();
+                            location.reload();
 						},
 						//jika ajax gagal
 						error: function () {

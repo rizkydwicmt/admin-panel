@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAdminTable extends Migration
+class BotVbac extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,15 @@ class CreateAdminTable extends Migration
      */
     public function up()
     {
-        Schema::create('admin', function (Blueprint $table) {
+        Schema::create('bot_vbac', function (Blueprint $table) {
             $table->id();
-            $table->string('username')->unique();
-            $table->string('password');
+            $table->string('hwid')->unique();
+            $table->string('code')->unique();
+            $table->string('owner');
+            $table->integer('expired_day');
+            $table->string('keterangan');
             $table->boolean('status')->comment = '0 Nonaktif, 1 Aktif';
+            $table->string('created_by');
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ class CreateAdminTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin');
+        //
     }
 }

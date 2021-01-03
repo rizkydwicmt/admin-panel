@@ -29,6 +29,8 @@
                             <th scope="col">operator</th>
                             <th scope="col">atas_nama</th>
                             <th scope="col">via</th>
+                            <th scope="col">bulan</th>
+                            <th scope="col">harga</th>
                             <th scope="col">tanggal transaksi</th>
                             <th scope="col">status</th>
                     </tr>
@@ -42,6 +44,8 @@
                         <td>{{ $data->username }}</td>
                         <td>{{ $data->atas_nama }}</td>
                         <td>{{ $data->via }}</td>
+                        <td>{{ $data->extend }}</td>
+                        <td>{{ $data->harga }}</td>
                         <td>{{ $data->created_at }}</td>
                         <td>{{ $data->status == 1 ? 'Terbayar':'Dibatalkan' }}</td>
                     </tr>
@@ -55,11 +59,50 @@
                         <th scope="col">operator</th>
                         <th scope="col">atas_nama</th>
                         <th scope="col">via</th>
+                        <th scope="col">bulan</th>
+                        <th scope="col">harga</th>
                         <th scope="col">tanggal transaksi</th>
                         <th scope="col">status</th>
                     </tr>
                 </tfoot>
             </table>
+            {{-- Modal button Filter Bulan --}}
+
+            <div class="modal fade text-left" id="filter_bulan" tabindex="-1" role="dialog"
+                aria-labelledby="modal_add" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h4 class="modal-title" id="modal_add">Tambah User </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                    </div>
+
+                    {{-- form --}}
+                    <form>
+                        <div class="modal-body">
+                            <label>*Bulan: </label>
+                            <div class="form-group">
+                                <input type="month" class="form-control" name="bulan" required>
+                            </div><br>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Close</span>
+                            </button>
+                            <button type="submit" class="btn btn-primary mr-1 mb-1">Submit</button>
+                        </div>
+                    </form>
+                    {{-- form End --}}
+
+                </div>
+                </div>
+            </div>
+
+            {{-- Modal button Filter Bulan End --}}
         </div>
     </div>
     
@@ -88,7 +131,13 @@
                 [ '10 rows', '25 rows', '50 rows', '100 rows' ]
             ],
             buttons: [
-                'pageLength','copy', 'csv', 'excel', 'pdf', 'print'
+                'pageLength',
+                {
+                    text: 'Filter bulan',
+                    action: function ( e, dt, node, config ) {
+                        $('#filter_bulan').modal('show');
+                    }
+                },'copy', 'csv', 'excel', 'pdf', 'print'
             ],
             rowReorder: {
                 selector: 'td:nth-child(2)'

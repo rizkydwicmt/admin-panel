@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserDetail;
 use App\Models\Transaksi;
+use App\Models\BotVBAC;
+use App\Models\TransaksiVBAC;
 
 class AdminController extends Controller
 {
@@ -21,7 +23,8 @@ class AdminController extends Controller
             'bulan_ini' => 0,
             'persen' => 0,
             'color_bulan' => 0,
-            'pendaftar' => []
+            'pendaftar' => [],
+            'harga' => (int) env('HARGA_HIGHGAMER',0)
         );
 
         return view('konten/dashboard', $data);
@@ -39,11 +42,21 @@ class AdminController extends Controller
         return view('konten/kelola_user', $users);
     }
 
-    public function list_transaksi()
+    public function list_transaksi(Request $request)
     {
+        $transaksi = Transaksi::orderBy('created_at', 'DESC');
+
+        if($request->bulan)
+        {
+            $date = explode("-", $request->bulan);
+            $transaksi->whereMonth('created_at', '=', $date[1])
+            ->whereYear('created_at', '=', $date[0]);
+        }
+
         $transaksi = array(
-                            'transaksi' => Transaksi::orderBy('created_at', 'DESC')->get() 
-                        );
+            'transaksi' => $transaksi->get() 
+        );
+
         return view('konten/list_transaksi', $transaksi);
     }
 
@@ -62,5 +75,13 @@ class AdminController extends Controller
                     'bot' => UserDetail::get() 
                 );
         return view('konten/list_bot', $bot);
+    }
+
+    public function kelola_bot_vbac()
+    {
+        $bot = array(
+                    'bot' => BotVBAC::get() 
+                );
+        return view('konten/vbac/kelola_bot', $bot);
     }
 }

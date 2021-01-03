@@ -20,7 +20,7 @@ class CreateUserTable extends Migration
             $table->string('server');
             $table->string('keterangan');
             $table->timestamp('expired_date', 0)->nullable();
-            $table->boolean('status');
+            $table->boolean('status')->comment = '0 Nonaktif, 1 Aktif';
             $table->string('created_by');
             $table->timestamps();
         });
