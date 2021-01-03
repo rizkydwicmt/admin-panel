@@ -16,20 +16,31 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/login', function () {
+    return view('welcome');
+});
 
 /* Admin */
 
 $router->group(['prefix' => 'akses_admin'], function () use ($router) {
-    /* Highgamer */
-    Route::get('/', 'AdminController@dashboard');
-    Route::get('/list_user', 'AdminController@list_user');
-    Route::get('/kelola_user', 'AdminController@kelola_user');
-    Route::get('/list_transaksi', 'AdminController@list_transaksi');
-    Route::get('/kelola_transaksi', 'AdminController@kelola_transaksi');
-    Route::get('/list_bot', 'AdminController@list_bot');
-    /* VBAC */
-    Route::get('/vbac/kelola_bot', 'AdminController@kelola_bot_vbac');
-    Route::get('/vbac/kelola_transaksi', 'AdminController@kelola_transaksi_vbac');
+    /* Admin Login */
+    Route::get('/login', 'AuthController@login');
+    Route::post('/login', 'AuthController@cek_login');
+    Route::get('/logout', 'AuthController@logout');
+
+    $router->group(['middleware' => 'auth'], function () use ($router) {
+        /* Highgamer */
+        Route::get('/', 'AdminController@dashboard');
+        Route::get('/list_user', 'AdminController@list_user');
+        Route::get('/kelola_user', 'AdminController@kelola_user');
+        Route::get('/list_transaksi', 'AdminController@list_transaksi');
+        Route::get('/kelola_transaksi', 'AdminController@kelola_transaksi');
+        Route::get('/list_bot', 'AdminController@list_bot');
+
+        /* VBAC */
+        Route::get('/vbac/kelola_bot', 'AdminController@kelola_bot_vbac');
+        Route::get('/vbac/kelola_transaksi', 'AdminController@kelola_transaksi_vbac');
+    });
 });
 
 /* Users */
