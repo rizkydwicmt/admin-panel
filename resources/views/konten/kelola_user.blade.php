@@ -105,8 +105,8 @@
                                     <div class="form-group">
                                         <select class="form-select" name="server_ao" required>
                                             {{-- hardcode --}}
-                                            <option value="0">Semua</option>
-                                            <option value="1">Kecuali Atlantica Indonesia</option>
+                                            <option value="0" {{ $user->server == 0 ? 'selected' : '' }}>Semua</option>
+                                            <option value="1" {{ $user->server == 1 ? 'selected' : '' }}>Kecuali Atlantica Indonesia</option>
                                         </select>
                                     </div>
         
@@ -190,7 +190,7 @@
                                 <select class="form-select" name="server_ao" required>
                                     {{-- hardcode --}}
                                     <option value="0">Semua</option>
-                                    <option value="1">Kecuali Atlantica Indonesia</option>
+                                    <option value="1" selected>Kecuali Atlantica Indonesia</option>
                                 </select>
                             </div>
 
